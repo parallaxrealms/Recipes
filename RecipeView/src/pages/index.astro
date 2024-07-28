@@ -1,0 +1,29 @@
+---
+import RecipeCard from '../components/RecipeCard.svelte';
+import { recipes } from '../store.js';
+import { get } from 'svelte/store';
+
+// Fetch the recipes data from the store
+const recipesData = get(recipes);
+---
+
+<!doctype html>
+<html lang='en'>
+	<head>
+		<title>Recipe Viewer</title>
+	</head>
+	<body>
+		{
+			Object.entries(recipesData).map(([listName, recipeList]) => (
+				<section>
+					<h2>{listName}</h2>
+					{recipeList.map((recipe) => (
+						<div>
+							<RecipeCard recipe={recipe} client:load />
+						</div>
+					))}
+				</section>
+			))
+		}
+	</body>
+</html>

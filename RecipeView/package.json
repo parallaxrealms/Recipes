@@ -1,0 +1,18 @@
+{
+  "name": "recipeview",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/svelte": "^5.7.0",
+    "astro": "^4.12.2",
+    "svelte": "^4.2.18",
+    "svelte-fullscreen": "^2.0.0"
+  }
+}

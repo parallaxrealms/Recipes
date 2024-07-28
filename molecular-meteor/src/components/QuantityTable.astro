@@ -1,0 +1,128 @@
+---
+const tableData = [
+	{ ingredient: 'Ingredient 1', unit: 'Unit 1', amount: 100 },
+	{ ingredient: 'Ingredient 2', unit: 'Unit 2', amount: 200 },
+	{ ingredient: 'Ingredient 3', unit: 'Unit 3', amount: 300 },
+	{ ingredient: 'Ingredient 4', unit: 'Unit 4', amount: 400 },
+	{ ingredient: 'Ingredient 5', unit: 'Unit 5', amount: 500 },
+];
+const defaultMultiplier = 1;
+---
+
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8' />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+		<title>HTML Table with Quantity Selectors</title>
+		<style>
+			table {
+				width: 50%;
+				border-collapse: collapse;
+				margin: 20px 0;
+			}
+			th,
+			td {
+				border: 1px solid #000;
+				padding: 8px;
+				text-align: center;
+			}
+			th {
+				background-color: #f2f2f2;
+			}
+			.quantity-container {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin-bottom: 20px;
+			}
+			.quantity-container button {
+				width: 30px;
+				height: 30px;
+				margin: 0 5px;
+				font-size: 16px;
+				cursor: pointer;
+			}
+			.quantity-container input {
+				width: 50px;
+				text-align: center;
+				font-size: 16px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class='quantity-container'>
+			<button id='decrease-btn'>-</button>
+			<input
+				id='multiplier'
+				type='number'
+				value={defaultMultiplier}
+				min='1'
+				readonly
+			/>
+			<button id='increase-btn'>+</button>
+		</div>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Ingredient</th>
+					<th>Unit</th>
+					<th>Amount</th>
+				</tr>
+			</thead>
+			<tbody id='ingredient-table-body'>
+				{
+					tableData.map((row, index) => (
+						<tr key={index}>
+							<td>{row.ingredient}</td>
+							<td>{row.unit}</td>
+							<td>{row.amount * defaultMultiplier}</td>
+						</tr>
+					))
+				}
+			</tbody>
+		</table>
+
+		<script>
+			const tableData = [
+				{ ingredient: 'Ingredient 1', unit: 'Unit 1', amount: 100 },
+				{ ingredient: 'Ingredient 2', unit: 'Unit 2', amount: 200 },
+				{ ingredient: 'Ingredient 3', unit: 'Unit 3', amount: 300 },
+				{ ingredient: 'Ingredient 4', unit: 'Unit 4', amount: 400 },
+				{ ingredient: 'Ingredient 5', unit: 'Unit 5', amount: 500 },
+			];
+
+			document.addEventListener('DOMContentLoaded', () => {
+				const decreaseBtn = document.getElementById('decrease-btn');
+				const increaseBtn = document.getElementById('increase-btn');
+				const multiplierInput = document.getElementById('multiplier');
+
+				decreaseBtn.addEventListener('click', () => changeMultiplier(-1));
+				increaseBtn.addEventListener('click', () => changeMultiplier(1));
+
+				function changeMultiplier(change) {
+					let multiplier = parseInt(multiplierInput.value) + change;
+					if (multiplier < 1) {
+						multiplier = 1;
+					}
+					multiplierInput.value = multiplier;
+					updateTable(multiplier);
+				}
+
+				function updateTable(multiplier) {
+					const tbody = document.getElementById('ingredient-table-body');
+					tbody.innerHTML = '';
+					tableData.forEach((row, index) => {
+						const tr = document.createElement('tr');
+						tr.innerHTML = `
+						<td>${row.ingredient}</td>
+						<td>${row.unit}</td>
+						<td>${row.amount * multiplier}</td>
+					`;
+						tbody.appendChild(tr);
+					});
+				}
+			});
+		</script>
+	</body>
+</html>
